@@ -8,17 +8,16 @@ import android.widget.BaseAdapter
 import androidx.core.content.ContextCompat
 import com.projeto.contacorrente.R
 import com.projeto.contacorrente.extension.formataParaBrasileiro
+import com.projeto.contacorrente.extension.limitaEmAte
 import com.projeto.contacorrente.model.Tipo
 import com.projeto.contacorrente.model.Transacao
 import kotlinx.android.synthetic.main.transacao_item.view.*
 
 
 class ListaTransacoesAdapter(
-    context: Context,
-    transacoes: List<Transacao>
+    var context: Context,
+    var transacoes: List<Transacao>
 ) : BaseAdapter() {
-    val transacoes = transacoes
-    val context = context
 
     override fun getView(position: Int, convertView: View?, parent: ViewGroup?): View {
         val viewCriada = LayoutInflater.from(context).inflate(
@@ -26,19 +25,41 @@ class ListaTransacoesAdapter(
             parent, false
         )
 
-        if(transacoes[position].tipo == Tipo.RECEITA){
-            viewCriada.transacao_valor.setTextColor(ContextCompat.getColor(context,R.color.receita))
+        adicionaValorEIcone(position, viewCriada)
+        adicionaCategoria(viewCriada, position)
+        adicionaData(viewCriada, position)
+        return viewCriada
+    }
+
+    private fun adicionaData(viewCriada: View, position: Int) {
+        viewCriada.transacao_data.text = transacoes[position].data?.formataParaBrasileiro()
+    }
+
+    private fun adicionaCategoria(viewCriada: View, position: Int) {
+        viewCriada.transacao_categoria.text = transacoes[position].categoria?.limitaEmAte(14)
+    }
+
+    private fun adicionaValorEIcone(position: Int, viewCriada: View) {
+        if (transacoes[position].tipo == Tipo.RECEITA) {
+            viewCriada.transacao_valor.setTextColor(
+                ContextCompat.getColor(
+                    context,
+                    R.color.receita
+                )
+            )
             viewCriada.transacao_icone.setImageResource(R.drawable.icone_transacao_item_receita)
-        }else if(transacoes[position].tipo == Tipo.DESPESA){
-            viewCriada.transacao_valor.setTextColor(ContextCompat.getColor(context,R.color.despesa))
+        } else if (transacoes[position].tipo == Tipo.DESPESA) {
+            viewCriada.transacao_valor.setTextColor(
+                ContextCompat.getColor(
+                    context,
+                    R.color.despesa
+                )
+            )
             viewCriada.transacao_icone.setImageResource(R.drawable.icone_transacao_item_despesa)
 
         }
 
-        viewCriada.transacao_valor.text = transacoes[position].valor.toString()
-        viewCriada.transacao_categoria.text = transacoes[position].categoria
-        viewCriada.transacao_data.text = transacoes[position].data?.formataParaBrasileiro()
-        return viewCriada
+        viewCriada.transacao_valor.text = transacoes[position].valor?.formataParaBrasileiro()
     }
 
     override fun getItem(position: Int): Transacao {
