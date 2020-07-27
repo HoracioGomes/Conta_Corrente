@@ -15,4 +15,6 @@
     <string name="ano">Ano</string>
     <string name="string_data_padrao_brasileiro">dd/MM/yyyy</string>
     <string name="string_indefinido">Indefinido</string>
+    <string name="string_btn_cancelar">Cancelar</string>
+    <string name="string_btn_adicionar">Adicionar</string>
 </resources>
