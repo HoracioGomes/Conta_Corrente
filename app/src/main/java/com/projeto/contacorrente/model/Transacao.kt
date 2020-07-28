@@ -26,4 +26,8 @@ class Transacao(
         ctx = ctx, valor = valor, categoria = ctx?.getString(R.string.string_indefinido),
         tipo = tipo, data = data
     )
+
+    override fun toString(): String {
+        return "Valor: $valor - Categoria: $categoria - Tipo: $tipo - Data: ${data?.time}"
+    }
 }
