@@ -6,6 +6,7 @@ import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
 import com.projeto.contacorrente.R
 import com.projeto.contacorrente.delegate.TransacaoDelegate
+import com.projeto.contacorrente.model.Tipo
 import com.projeto.contacorrente.model.Transacao
 import com.projeto.contacorrente.ui.ResumoView
 import com.projeto.contacorrente.ui.adapter.ListaTransacoesAdapter
@@ -20,15 +21,37 @@ class ListaTransacoesActivity : AppCompatActivity() {
         setContentView(R.layout.activity_lista_transacoes)
         configuraResumo()
         configuraLista()
+        configuraFabs()
+    }
+
+    private fun configuraFabs() {
         lista_transacoes_adiciona_receita.setOnClickListener {
-            AdicionaTransacaoDialog(window.decorView as ViewGroup, this)
-                .configuraDialog(object : TransacaoDelegate {
-                    override fun delegate(transacao: Transacao) {
-                        atualizaTransacoes(transacao)
-                        lista_transacoes_adiciona_menu.close(true)
-                    }
-                })
+            chamaDialogAdicao(Tipo.RECEITA)
         }
+
+        lista_transacoes_adiciona_despesa.setOnClickListener {
+            chamaDialogSubtracao(Tipo.DESPESA)
+        }
+    }
+
+    private fun chamaDialogSubtracao(tipo: Tipo) {
+        AdicionaTransacaoDialog(window.decorView as ViewGroup, this)
+            .chama(tipo, object : TransacaoDelegate {
+                override fun delegate(transacao: Transacao) {
+                    atualizaTransacoes(transacao)
+                    lista_transacoes_adiciona_menu.close(true)
+                }
+            })
+    }
+
+    private fun chamaDialogAdicao(tipo: Tipo) {
+        AdicionaTransacaoDialog(window.decorView as ViewGroup, this)
+            .chama(tipo, object : TransacaoDelegate {
+                override fun delegate(transacao: Transacao) {
+                    atualizaTransacoes(transacao)
+                    lista_transacoes_adiciona_menu.close(true)
+                }
+            })
     }
 
     private fun atualizaTransacoes(transacaoCriada: Transacao) {
