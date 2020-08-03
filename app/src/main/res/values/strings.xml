@@ -17,4 +17,5 @@
     <string name="string_indefinido">Indefinido</string>
     <string name="string_btn_cancelar">Cancelar</string>
     <string name="string_btn_adicionar">Adicionar</string>
+    <string name="string_btn_alterar">Alterar</string>
 </resources>

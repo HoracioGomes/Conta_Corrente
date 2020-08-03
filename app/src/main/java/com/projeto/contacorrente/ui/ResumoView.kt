@@ -27,19 +27,22 @@ class ResumoView(
 
     private fun adicionaReceitaResumo() {
         val totalReceita = resumo.receita
-        with(view.resumo_card_receita) {
-            setTextColor(corReceita)
-            text = totalReceita.formataParaBrasileiro()
-        }
+            with(view.resumo_card_receita) {
+                setTextColor(corReceita)
+                text = totalReceita.formataParaBrasileiro()
+            }
+
     }
 
 
     private fun adicionaDespesaResumo() {
         var totalDespesa = resumo.despesa
-        with(view.resumo_card_despesa) {
-            setTextColor(corDespesa)
-            text = totalDespesa.formataParaBrasileiro()
-        }
+            with(view.resumo_card_despesa) {
+                setTextColor(corDespesa)
+                text = totalDespesa.formataParaBrasileiro()
+            }
+
+
     }
 
     private fun adicionaTotalResumo() {
@@ -53,5 +56,6 @@ class ResumoView(
             setTextColor(cor)
             text = total.formataParaBrasileiro()
         }
+
     }
 }
