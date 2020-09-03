@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import android.widget.AdapterView
 import androidx.appcompat.app.AppCompatActivity
 import com.projeto.contacorrente.R
+import com.projeto.contacorrente.dao.TransacaoDAO
 import com.projeto.contacorrente.delegate.TransacaoDelegate
 import com.projeto.contacorrente.model.Tipo
 import com.projeto.contacorrente.model.Transacao
@@ -18,7 +19,8 @@ import com.projeto.contacorrente.ui.dialog.AlteraTransacaoDialog
 import kotlinx.android.synthetic.main.activity_lista_transacoes.*
 
 class ListaTransacoesActivity : AppCompatActivity() {
-    private val transacoes: MutableList<Transacao> = mutableListOf()
+    private val dao  = TransacaoDAO()
+    private val transacoes = dao.transacoes
     private val viewDaAvtivity by lazy { window.decorView }
     private val viewGroupDaActivity by lazy { viewDaAvtivity as ViewGroup }
     private val TAG = "LOG_TRANSACOES_ACTIVITY"
@@ -61,7 +63,7 @@ class ListaTransacoesActivity : AppCompatActivity() {
     }
 
     private fun adiciona(transacao: Transacao) {
-        transacoes.add(transacao)
+        dao.adiciona(transacao)
         atualizaTransacoes()
     }
 
@@ -109,7 +111,7 @@ class ListaTransacoesActivity : AppCompatActivity() {
     }
 
     private fun altera(transacao: Transacao, position: Int) {
-        transacoes[position] = transacao
+        dao.altera(position,transacao)
         atualizaTransacoes()
     }
 
@@ -125,7 +127,7 @@ class ListaTransacoesActivity : AppCompatActivity() {
 
     private fun remove(adapterContextMenuInfo: AdapterView.AdapterContextMenuInfo) {
         val posicao = adapterContextMenuInfo.position
-        transacoes.removeAt(posicao)
+        dao.remove(posicao)
         atualizaTransacoes()
     }
 
