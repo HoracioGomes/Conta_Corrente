@@ -18,4 +18,5 @@
     <string name="string_btn_cancelar">Cancelar</string>
     <string name="string_btn_adicionar">Adicionar</string>
     <string name="string_btn_alterar">Alterar</string>
+    <string name="string_menu_remover_transacao">Remover</string>
 </resources>

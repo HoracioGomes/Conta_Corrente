@@ -2,7 +2,10 @@ package com.projeto.contacorrente.ui.activity
 
 import android.os.Bundle
 import android.util.Log
+import android.view.Menu
+import android.view.MenuItem
 import android.view.ViewGroup
+import android.widget.AdapterView
 import androidx.appcompat.app.AppCompatActivity
 import com.projeto.contacorrente.R
 import com.projeto.contacorrente.delegate.TransacaoDelegate
@@ -80,6 +83,15 @@ class ListaTransacoesActivity : AppCompatActivity() {
                 var transacao = transacoes[position]
                 chamaDialogAlteracao(transacao, position)
             }
+
+            setOnCreateContextMenuListener { menu, _, _ ->
+                menu.add(
+                    Menu.NONE,
+                    1,
+                    Menu.NONE,
+                    context.getString(R.string.string_menu_remover_transacao)
+                )
+            }
         }
     }
 
@@ -98,6 +110,22 @@ class ListaTransacoesActivity : AppCompatActivity() {
 
     private fun altera(transacao: Transacao, position: Int) {
         transacoes[position] = transacao
+        atualizaTransacoes()
+    }
+
+    override fun onContextItemSelected(item: MenuItem): Boolean {
+        val idMenu = item.itemId
+        val adapterContextMenuInfo =
+            item.menuInfo as AdapterView.AdapterContextMenuInfo
+        if (idMenu == 1) {
+            remove(adapterContextMenuInfo)
+        }
+        return super.onContextItemSelected(item)
+    }
+
+    private fun remove(adapterContextMenuInfo: AdapterView.AdapterContextMenuInfo) {
+        val posicao = adapterContextMenuInfo.position
+        transacoes.removeAt(posicao)
         atualizaTransacoes()
     }
 
