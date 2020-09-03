@@ -1,6 +1,7 @@
 package com.projeto.contacorrente.ui.activity
 
 import android.os.Bundle
+import android.util.Log
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
 import com.projeto.contacorrente.R
@@ -40,7 +41,7 @@ class ListaTransacoesActivity : AppCompatActivity() {
         AdicionaTransacaoDialog(viewGroupDaActivity, this)
             .chama(tipo, object : TransacaoDelegate {
                 override fun delegate(transacao: Transacao) {
-                    atualizaTransacoes()
+                    adiciona(transacao)
                     lista_transacoes_adiciona_menu.close(true)
                 }
             })
